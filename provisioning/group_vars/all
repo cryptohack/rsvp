@@ -1,0 +1,9 @@
+---
+disk_additional_disks:
+  - disk: /dev/vdb
+    fstype: ext4
+    mount_options: defaults
+    mount: /data
+
+app_path: /data/rsvp
+locale: "en_AU.UTF-8"

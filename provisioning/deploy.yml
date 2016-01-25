@@ -1,0 +1,8 @@
+- hosts: all
+  sudo: yes
+  roles:
+    - { role: aeriscloud.disk }
+    - { role: common }
+    - { role: firewall }
+    - { role: letsencrypt, cert_contact_email: "{{ lookup('env','CERT_EMAIL') }}" }
+    - { role: nginx, https_certs_dir: "/etc/letsencrypt/live/{{ inventory_hostname }}" }

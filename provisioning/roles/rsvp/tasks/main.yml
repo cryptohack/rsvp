@@ -1,0 +1,29 @@
+- name: install java
+  apt: name=default-jre-headless
+
+- name: create app user group
+  group: name="{{ app_user }}" system=yes
+
+- name: create app user
+  user: name="{{ app_user }}" group="{{ app_user }}" system=yes
+
+- name: ensure app dir is owner by app user
+  file: path="{{ app_path }}" owner="{{ app_user }}" group="{{ app_user }}" recurse=yes state=directory
+
+- name: create logs dir
+  file: path="{{ logs_dir }}" state=directory owner="{{ app_user }}" group="{{ app_user }}"
+
+- name: create pids dir
+  file: path="{{ pids_dir }}" state=directory owner="{{ app_user }}" group="{{ app_user }}"
+
+- name: install pslist
+  apt: name=pslist
+
+- name: upload init script
+  template: src=rsvp_init.j2 dest=/etc/init.d/rsvp mode=0755
+
+- name: upload app
+  copy: src=?? dest="{{ app_path }}/rsvp-latest.jar"
+
+- name: re/start app
+  service: name=rsvp enabled=yes state=restarted

@@ -1,0 +1,5 @@
+---
+app_path: /opt
+app_user: rsvp
+logs_dir: /var/log/rsvp
+pids_dir: /var/run/rsvp
