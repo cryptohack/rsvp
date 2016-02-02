@@ -9,14 +9,13 @@
 
 (defn rsvp-handler [req]
   (prn req)
-  (spit "rsvps.edn"
-        (str (:body req) "\n")
+  (spit "rsvps.csv"
+        (str (slurp (:body req)) "\n")
         :append true)
   {:status 201})
 
 (def app
-  (-> (routes (POST "/rsvp" [] rsvp-handler))
-      (middleware/wrap-json-body {:keywords? true})))
+  (routes (POST "/rsvp" [] rsvp-handler)))
 
 (defn -main []
   (let [port 8080]
