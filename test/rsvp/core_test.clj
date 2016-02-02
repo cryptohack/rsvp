@@ -8,9 +8,9 @@
   (fact "rsvp works"
     (let [response (->
                      (mock/request :post "/rsvp")
-                     (mock/body {:name "namo"})
+                     (mock/body {:name "namo" :github "github_namo" :email "whatsit@example.com"})
                      core/app)]
       (:status response) => 201
 
       (with-open [reader (io/reader "rsvps.csv")]
-        (last (line-seq reader)) => "name=namo"))))
+        (last (line-seq reader)) => "namo,whatsit@example.com,github_namo"))))
